@@ -4,25 +4,25 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom";
 
 const BlogDetails = () => {
     const {id} = useParams()
-    const {data:blog, error, isLoading} = useFetch('http://localhost:8000/blogs/' + id);
+    const {data, error, isLoading} = useFetch('https://dummyjson.com/posts/' + id);
     const history = useHistory();
     const handleDelete = () => {
-        fetch('http://localhost:8000/blogs/' + blog.id, {
+        fetch('https://dummyjson.com/posts/' + id, {
             method:'DELETE'
         }).then(() => {
             history.push('/');
         })
-        
+       console.log("render") 
     }
     return ( 
         <div className="blog_details">
             {isLoading && <div>Loading...</div>}
             {error && <div>{error}</div>}
-            {blog && (
+            {data && (
                 <article>
-                    <h2>{blog.title}</h2>
-                    <p>written by {blog.author}</p>
-                    <div>{blog.body}</div>
+                    <h2>{data.title}</h2>
+                    <p>written by {data.author}</p>
+                    <div>{data.body}</div>
                     <button onClick={handleDelete}>Delete blog</button>
                 </article>
             )}
